@@ -19,21 +19,47 @@ class _PageOneState extends State<PageOne> {
     return Scaffold (
       body: Center (
         child: Column (
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Padding(padding: EdgeInsets.all(20)),
-            TextField(
+            Container(
+              width: 200,
+              child: TextField(
               controller: cepText,
               canRequestFocus: true,
               keyboardType: TextInputType.number,
+              decoration: const InputDecoration(hintText: 'Informe um CEP', ),
             ),
-            ElevatedButton(onPressed: (){
+            ),
+            
+            const SizedBox(height: 12,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(onPressed: (){
               httpRequest();
             },
             child: const Text('Pesquisar')),
-            if(address != null) ...[
-              Text('CEP: ${address!.cep}\nRua: ${address!.rua}\nUF: ${address!.uf}\nLocalidade: ${address!.localidade}\nBairro: ${address!.bairro}'),
-            ]
+            SizedBox(width: 10,),
+            ElevatedButton(onPressed: (){
+              address!.bairro = '';
+              address!.cep = '';
+              address!.localidade = '';
+              address!.rua = '';
+              address!.uf = '';
+              setState(() {
+              });
+            }, child:const Text('Limpar')),
+              ],
+            ),
             
+            const SizedBox(height: 12,),
+            if(address != null) ...[
+              Text('CEP: ${address!.cep}\nBairro: ${address!.bairro}\nRua: ${address!.rua}\nUF: ${address!.uf}\nLocalidade: ${address!.localidade}',
+              style: TextStyle(fontSize: 16),
+              ),
+            ],
           ],
         ),
       ),
