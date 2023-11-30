@@ -4,7 +4,7 @@ class Address{
   String bairro;
   String localidade;
   String uf;
-
+  //construtor
   Address({
     required this.cep,
     required this.rua,
