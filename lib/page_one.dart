@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:api_cep/addressmodel.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:search_cep/search_cep.dart' as http;
 
 class PageOne extends StatefulWidget {
   const PageOne({super.key});
@@ -14,7 +13,6 @@ class PageOne extends StatefulWidget {
 class _PageOneState extends State<PageOne> {
   TextEditingController cepText = TextEditingController();
   Address? address;
-  String cep = '';
 
   @override
   Widget build(BuildContext context)  {
