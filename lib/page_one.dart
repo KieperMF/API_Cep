@@ -20,15 +20,18 @@ class _PageOneState extends State<PageOne> {
       body: Center (
         child: Column (
           children: [
+            const Padding(padding: EdgeInsets.all(20)),
             TextField(
               controller: cepText,
+              canRequestFocus: true,
+              keyboardType: TextInputType.number,
             ),
             ElevatedButton(onPressed: (){
               httpRequest();
             },
-            child: Text('Pesquisar')),
+            child: const Text('Pesquisar')),
             if(address != null) ...[
-              Text('Bairro:'+address!.bairro)
+              Text('CEP: ${address!.cep}\nRua: ${address!.rua}\nUF: ${address!.uf}\nLocalidade: ${address!.localidade}\nBairro: ${address!.bairro}'),
             ]
             
           ],
@@ -46,7 +49,7 @@ class _PageOneState extends State<PageOne> {
       address = Address.fromJson(decode);
     }else{
       ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Erro carregar dados')));
+        .showSnackBar(const SnackBar(content: Text('Erro carregar dados')));
     }
     setState(() {});
   }
