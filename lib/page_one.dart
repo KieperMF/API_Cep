@@ -15,10 +15,10 @@ class _PageOneState extends State<PageOne> {
   Address? address;
 
   @override
-  Widget build(BuildContext context)  {
-    return Scaffold (
-      body: Center (
-        child: Column (
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -26,38 +26,48 @@ class _PageOneState extends State<PageOne> {
             Container(
               width: 200,
               child: TextField(
-              controller: cepText,
-              canRequestFocus: true,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(hintText: 'Informe um CEP', ),
+                controller: cepText,
+                canRequestFocus: true,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  hintText: 'Informe um CEP',
+                ),
+              ),
             ),
+            const SizedBox(
+              height: 12,
             ),
-            
-            const SizedBox(height: 12,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(onPressed: (){
-              httpRequest();
-            },
-            child: const Text('Pesquisar')),
-            SizedBox(width: 10,),
-            ElevatedButton(onPressed: (){
-              address!.bairro = '';
-              address!.cep = '';
-              address!.localidade = '';
-              address!.rua = '';
-              address!.uf = '';
-              setState(() {
-              });
-            }, child:const Text('Limpar')),
+                ElevatedButton(
+                    onPressed: () {
+                      httpRequest();
+                      },
+                    child: const Text('Pesquisar')),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      address!.bairro = '';
+                      address!.cep = '';
+                      address!.localidade = '';
+                      address!.rua = '';
+                      address!.uf = '';
+                      cepText.clear();
+                      setState(() {});
+                    },
+                    child: const Text('Limpar')),
               ],
             ),
-            
-            const SizedBox(height: 12,),
-            if(address != null) ...[
-              Text('CEP: ${address!.cep}\nBairro: ${address!.bairro}\nRua: ${address!.rua}\nUF: ${address!.uf}\nLocalidade: ${address!.localidade}',
-              style: TextStyle(fontSize: 16),
+            const SizedBox(
+              height: 12,
+            ),
+            if (address != null) ...[
+              Text(
+                'CEP: ${address!.cep}\nBairro: ${address!.bairro}\nRua: ${address!.rua}\nUF: ${address!.uf}\nLocalidade: ${address!.localidade}',
+                style: const TextStyle(fontSize: 16),
               ),
             ],
           ],
@@ -66,18 +76,17 @@ class _PageOneState extends State<PageOne> {
     );
   }
 
-  void httpRequest() async{
+  void httpRequest() async {
     String cep = cepText.text;
     Uri url = Uri.parse('https://viacep.com.br/ws/$cep/json/');
     final response = await http.get(url);
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       final decode = jsonDecode(response.body);
       address = Address.fromJson(decode);
-    }else{
+    } else {
       ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Erro carregar dados')));
+          .showSnackBar(const SnackBar(content: Text('Erro carregar dados')));
     }
     setState(() {});
   }
 }
-
